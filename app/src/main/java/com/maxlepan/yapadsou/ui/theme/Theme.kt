@@ -6,6 +6,10 @@ import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import com.maxlepan.yapadsou.R
 
 private val DarkColorPalette = darkColors(
     primary = Purple200,
@@ -27,6 +31,15 @@ private val LightColorPalette = lightColors(
     onBackground = Color.Black,
     onSurface = Color.Black,
     */
+)
+
+val IntegralCF = FontFamily(
+    Font(R.font.integralcf_regular, weight = FontWeight.Normal)
+)
+
+var Inter = FontFamily(
+    Font(R.font.inter_medium, weight = FontWeight.Medium),
+    Font(R.font.inter_bold, weight = FontWeight.Bold)
 )
 
 @Composable

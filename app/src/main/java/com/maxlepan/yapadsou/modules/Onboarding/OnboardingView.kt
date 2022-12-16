@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.maxlepan.yapadsou.ui.theme.*
@@ -29,10 +30,14 @@ fun OnboardingView(){
                 ) {
             Text(
                 "PAS DE SOUS ?",
+                fontFamily = IntegralCF,
+                fontWeight = FontWeight.Normal,
                 fontSize = 30.sp,
                 color = Color.White
             )
             Text("Y'A PADSOU.",
+                fontFamily = IntegralCF,
+                fontWeight = FontWeight.Normal,
                 fontSize = 30.sp,
                 color = Salmon
             )
