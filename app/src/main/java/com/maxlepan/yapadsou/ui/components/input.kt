@@ -71,5 +71,5 @@ fun InputViewPreview() {
     InputView(placeholder = "Test", value = test,callback = { new ->
         test = new
         println(test)
-    })
+    },null)
 }
