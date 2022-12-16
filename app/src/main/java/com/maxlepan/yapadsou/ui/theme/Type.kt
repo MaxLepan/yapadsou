@@ -9,20 +9,57 @@ import androidx.compose.ui.unit.sp
 // Set of Material typography styles to start with
 val Typography = Typography(
     body1 = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
+        fontFamily = Inter,
+        fontWeight = FontWeight.Medium,
         fontSize = 16.sp
-    )
-    /* Other default text styles to override
-    button = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.W500,
+    ),
+
+    body2 = TextStyle(
+        fontFamily = Inter,
+        fontWeight = FontWeight.Bold,
+        fontSize = 12.sp
+    ),
+
+    subtitle1 = TextStyle(
+        fontFamily = Inter,
+        fontWeight = FontWeight.Medium,
+        fontSize = 16.sp
+    ),
+
+    h1 = TextStyle(
+        fontFamily = IntegralCF,
+        fontWeight = FontWeight.Normal,
+        fontSize = 30.sp
+    ),
+
+    h2 = TextStyle(
+        fontFamily = IntegralCF,
+        fontWeight = FontWeight.Normal,
+        fontSize = 26.sp
+    ),
+
+    h3 = TextStyle(
+        fontFamily = IntegralCF,
+        fontWeight = FontWeight.Normal,
         fontSize = 14.sp
     ),
-    caption = TextStyle(
-        fontFamily = FontFamily.Default,
+
+    button = TextStyle(
+        fontFamily = IntegralCF,
         fontWeight = FontWeight.Normal,
-        fontSize = 12.sp
+        fontSize = 16.sp
+    ),
+
+    caption = TextStyle(
+        fontFamily = Inter,
+        fontWeight = FontWeight.Medium,
+        fontSize = 10.sp
+    ),
+
+    overline = TextStyle(
+        fontFamily = IntegralCF,
+        fontWeight = FontWeight.Normal,
+        fontSize = 10.sp
     )
-    */
+
 )

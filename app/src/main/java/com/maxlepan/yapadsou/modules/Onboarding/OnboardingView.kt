@@ -30,15 +30,11 @@ fun OnboardingView(){
                 ) {
             Text(
                 "PAS DE SOUS ?",
-                fontFamily = IntegralCF,
-                fontWeight = FontWeight.Normal,
-                fontSize = 30.sp,
-                color = Color.White
+                color = Color.White,
+                style = Typography.h1
             )
             Text("Y'A PADSOU.",
-                fontFamily = IntegralCF,
-                fontWeight = FontWeight.Normal,
-                fontSize = 30.sp,
+                style = Typography.h1,
                 color = Salmon
             )
         }
