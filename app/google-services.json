@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "629929357215",
+    "project_id": "yapadsou-mal",
+    "storage_bucket": "yapadsou-mal.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:629929357215:android:8ae615e24d72b82baa17aa",
+        "android_client_info": {
+          "package_name": "com.maxlepan.yapadsou"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "629929357215-9davp3ar9vqb0kocig1v09k60jdg3vjb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhWrWNOt2sMfMlcTXLTEWxs6C79DhKAw8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "629929357215-9davp3ar9vqb0kocig1v09k60jdg3vjb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
