@@ -30,8 +30,7 @@ fun OnboardingView(){
                 ) {
             Text(
                 "PAS DE SOUS ?",
-                color = Color.White,
-                style = Typography.h1
+                color = Color.White
             )
             Text("Y'A PADSOU.",
                 style = Typography.h1,
