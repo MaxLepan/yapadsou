@@ -13,13 +13,14 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.maxlepan.yapadsou.providers.FirebaseManager
 import com.maxlepan.yapadsou.ui.components.BigTitleView
 import com.maxlepan.yapadsou.ui.components.BlueButtonView
 import com.maxlepan.yapadsou.ui.components.InputView
 import com.maxlepan.yapadsou.ui.theme.Typography
 
 @Composable
-fun LoginView(navigateToRegister: () -> Unit) {
+fun LoginView(navigateToRegister: () -> Unit, navigateToHome: () -> Unit) {
     var email by remember { mutableStateOf(TextFieldValue("")) }
     var password by remember { mutableStateOf(TextFieldValue("")) }
 
@@ -58,7 +59,11 @@ fun LoginView(navigateToRegister: () -> Unit) {
             )
 
 
-            BlueButtonView(text = "Se connecter") { println("Do nothing") }
+            BlueButtonView(text = "Se connecter") {
+                FirebaseManager.connection(email = email.text, password = password.text) {
+                    navigateToHome()
+                }
+            }
 
 
         }
@@ -98,7 +103,5 @@ fun LoginView(navigateToRegister: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun LoginViewPreview() {
-    LoginView {
-
-    }
+    LoginView(navigateToHome = {}, navigateToRegister = {})
 }

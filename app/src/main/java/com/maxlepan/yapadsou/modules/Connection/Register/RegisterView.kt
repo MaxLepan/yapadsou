@@ -2,26 +2,24 @@ package com.maxlepan.yapadsou.modules.Connection.Register
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.ClickableText
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.maxlepan.yapadsou.providers.FirebaseManager
 import com.maxlepan.yapadsou.ui.components.BigTitleView
 import com.maxlepan.yapadsou.ui.components.BlueButtonView
 import com.maxlepan.yapadsou.ui.components.InputView
 import com.maxlepan.yapadsou.ui.theme.Typography
 
 @Composable
-fun RegisterView(navigateToLogin: () -> Unit) {
+fun RegisterView(navigateToLogin: () -> Unit, navigateToHome: () -> Unit) {
     var email by remember { mutableStateOf(TextFieldValue("")) }
     var password by remember { mutableStateOf(TextFieldValue("")) }
     var confirmPassword by remember { mutableStateOf(TextFieldValue("")) }
@@ -47,15 +45,18 @@ fun RegisterView(navigateToLogin: () -> Unit) {
                 email = new
             }, null)
 
-            InputView(placeholder = "Ton mot de passe", value = password, callback = { new ->
+            InputView(placeholder =
+              "Ton mot de passe", value = password, callback = { new ->
                 password = new
             }, null)
+
 
             InputView(placeholder = "Confirme ton mot de passe", value = confirmPassword, callback = { new ->
                 confirmPassword = new
             }, null)
 
             Text(
+
                 text = "En t’inscrivant, tu acceptes les Conditions générales d’utilisation de Padsou",
                 style = Typography.body2,
                 color = Color(0xFF747685),
@@ -67,11 +68,9 @@ fun RegisterView(navigateToLogin: () -> Unit) {
                     return@BlueButtonView
                 }
 
-                println(email)
-                println(password)
-                println(confirmPassword)
-
-
+                FirebaseManager.registration(email = email.text, password = password.text) {
+                    navigateToHome()
+                }
             }
         }
 
@@ -109,7 +108,5 @@ fun RegisterView(navigateToLogin: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun RegisterViewPreview() {
-    RegisterView() {
-
-    }
+    RegisterView(navigateToHome = {}, navigateToLogin = {})
 }

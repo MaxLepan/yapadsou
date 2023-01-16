@@ -38,14 +38,29 @@ fun ConnectionView() {
                 }
             }
             composable("register") {
-                RegisterView() {
-                    navController.navigate("login")
-                }
+                RegisterView(
+                    navigateToLogin = {
+                        navController.navigate("login")
+                    },
+                    navigateToHome = {
+                        navController.navigate("home")
+                    }
+                )
+
+
             }
             composable("login") {
-                LoginView() {
-                    navController.navigate("register")
-                }
+                LoginView(
+                    navigateToRegister = {
+                        navController.navigate("register")
+                    },
+                    navigateToHome = {
+                        navController.navigate("home")
+                    }
+                )
+            }
+            composable("home") {
+                Home()
             }
         }
 
