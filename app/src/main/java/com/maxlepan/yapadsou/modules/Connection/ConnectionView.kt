@@ -16,6 +16,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.maxlepan.yapadsou.modules.Connection.Login.LoginView
 import com.maxlepan.yapadsou.modules.Connection.Register.RegisterView
+import com.maxlepan.yapadsou.modules.Home.Home
+import com.maxlepan.yapadsou.modules.Onboarding.OnboardingView
 
 @Composable
 fun ConnectionView() {
@@ -29,7 +31,12 @@ fun ConnectionView() {
             .fillMaxHeight()
             .background(Color(0xFFF7F7F7))
     ) {
-        NavHost(navController = navController, startDestination = "register") {
+        NavHost(navController = navController, startDestination = "onboarding") {
+            composable("onboarding") {
+                OnboardingView() {
+                    navController.navigate("register")
+                }
+            }
             composable("register") {
                 RegisterView() {
                     navController.navigate("login")

@@ -19,7 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun OnboardingView() {
+fun OnboardingView(navigateToConnection: () -> Unit) {
 
     Column(
         Modifier
@@ -127,7 +127,7 @@ fun OnboardingView() {
         ) {
             Button(
                 onClick = {
-
+                    navigateToConnection()
                 },
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = Salmon
@@ -150,5 +150,7 @@ fun OnboardingView() {
 @Preview(showBackground = true)
 @Composable
 fun OnboardingPreview() {
-    OnboardingView()
+    OnboardingView {
+
+    }
 }
