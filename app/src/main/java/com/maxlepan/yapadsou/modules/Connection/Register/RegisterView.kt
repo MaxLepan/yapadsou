@@ -1,12 +1,14 @@
-package com.maxlepan.yapadsou.modules.Connection.Login
+package com.maxlepan.yapadsou.modules.Connection.Register
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.material.Button
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.TextFieldValue
@@ -19,12 +21,13 @@ import com.maxlepan.yapadsou.ui.components.InputView
 import com.maxlepan.yapadsou.ui.theme.Typography
 
 @Composable
-fun LoginView(navigateToRegister: () -> Unit) {
+fun RegisterView(navigateToLogin: () -> Unit) {
     var email by remember { mutableStateOf(TextFieldValue("")) }
     var password by remember { mutableStateOf(TextFieldValue("")) }
+    var confirmPassword by remember { mutableStateOf(TextFieldValue("")) }
 
-    val h1 = "TE REVOILA !"
-    val h2 = "Reviens vite pour profiter des bons plans"
+    val h1 = "BIENVENUE"
+    val h2 = "Inscris-toi pour avoir les meilleurs plans étudiants !"
 
     Column(
         Modifier
@@ -48,19 +51,28 @@ fun LoginView(navigateToRegister: () -> Unit) {
                 password = new
             }, null)
 
+            InputView(placeholder = "Confirme ton mot de passe", value = confirmPassword, callback = { new ->
+                confirmPassword = new
+            }, null)
+
             Text(
-                text = "Mot de passe oublié ?",
+                text = "En t’inscrivant, tu acceptes les Conditions générales d’utilisation de Padsou",
                 style = Typography.body2,
                 color = Color(0xFF747685),
-                modifier = Modifier
-                    .padding(top = 22.dp, bottom = 43.dp)
-                    .align(Alignment.End)
+                modifier = Modifier.padding(top = 63.dp, bottom = 12.dp)
             )
 
+            BlueButtonView(text = "S'enregistrer") {
+                if (password != confirmPassword) {
+                    return@BlueButtonView
+                }
 
-            BlueButtonView(text = "Se connecter") { println("Do nothing") }
+                println(email)
+                println(password)
+                println(confirmPassword)
 
 
+            }
         }
 
         Row(
@@ -70,35 +82,34 @@ fun LoginView(navigateToRegister: () -> Unit) {
             horizontalArrangement = Arrangement.Center
         ) {
             Text(
-                text = "Pas encore inscrit ?",
+                text = "Déjà un compte ?",
                 style = Typography.body2,
                 color = Color(0xFF747685)
             )
             ClickableText(
-                text = buildAnnotatedString {
-                    withStyle(
-                        style = SpanStyle(
-                            color = Color(0xFF5F67EA)
-                        )
-                    ) {
-                        append(" Allez viens !")
-                    }
-                },
+                text = buildAnnotatedString{ withStyle(
+                    style = SpanStyle(
+                        color = Color(0xFF5F67EA)
+                    )
+                ) {
+                    append(" Connecte-toi !")
+                }},
                 style = Typography.body2,
 
                 onClick = {
-                    navigateToRegister()
+                    navigateToLogin()
                 })
 
         }
     }
 
+
 }
 
 @Preview(showBackground = true)
 @Composable
-fun LoginViewPreview() {
-    LoginView {
+fun RegisterViewPreview() {
+    RegisterView() {
 
     }
 }

@@ -4,13 +4,9 @@ import android.graphics.drawable.Icon
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,12 +25,12 @@ fun InputView(placeholder:String, value: TextFieldValue, callback:(TextFieldValu
             onValueChange = callback,
             shape = RoundedCornerShape(20.dp),
             colors = TextFieldDefaults.textFieldColors(
-            textColor = Color.Gray,
-            disabledTextColor = Color.Transparent,
-            backgroundColor = Color(0xFFFFFFFF),
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent,
-            disabledIndicatorColor = Color.Transparent
+                textColor = Color.Gray,
+                disabledTextColor = Color.Transparent,
+                backgroundColor = Color(0xFFFFFFFF),
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                disabledIndicatorColor = Color.Transparent
         ),
             placeholder = {
                 Text(
@@ -48,7 +44,7 @@ fun InputView(placeholder:String, value: TextFieldValue, callback:(TextFieldValu
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 40.dp, vertical = 10.dp),
+                .padding(vertical = 10.dp),
         leadingIcon = {
             // NE FONCTIONNE PAS A REVOIR
             icon
