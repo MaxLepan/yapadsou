@@ -4,26 +4,39 @@ import android.graphics.drawable.Icon
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.input.*
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+
+
 @Composable
-fun InputView(placeholder:String, value: TextFieldValue, callback:(TextFieldValue) -> Unit, icon: Icon?) {
+fun InputView(
+    placeholder:String,
+    value: TextFieldValue,
+    callback:(TextFieldValue) -> Unit,
+    icon: Icon?,
+    keyboardType: KeyboardType,
+    isPassword: Boolean
+) {
 
     TextField(
             value = value,
             onValueChange = callback,
             shape = RoundedCornerShape(20.dp),
+            keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
+            visualTransformation =  if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
             colors = TextFieldDefaults.textFieldColors(
                 textColor = Color.Gray,
                 disabledTextColor = Color.Transparent,
@@ -67,5 +80,5 @@ fun InputViewPreview() {
     InputView(placeholder = "Test", value = test,callback = { new ->
         test = new
         println(test)
-    },null)
+    },null, KeyboardType.Email, false)
 }

@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
@@ -43,17 +44,17 @@ fun RegisterView(navigateToLogin: () -> Unit, navigateToHome: () -> Unit) {
 
             InputView(placeholder = "Ton adresse e-mail", value = email, callback = { new ->
                 email = new
-            }, null)
+            }, null,  keyboardType = KeyboardType.Email, isPassword = false)
 
             InputView(placeholder =
               "Ton mot de passe", value = password, callback = { new ->
                 password = new
-            }, null)
+            }, null, keyboardType = KeyboardType.Password, isPassword = true)
 
 
             InputView(placeholder = "Confirme ton mot de passe", value = confirmPassword, callback = { new ->
                 confirmPassword = new
-            }, null)
+            }, null, keyboardType = KeyboardType.Password, isPassword = true)
 
             Text(
 
