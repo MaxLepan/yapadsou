@@ -33,7 +33,7 @@ fun ConnectionView() {
     ) {
         NavHost(navController = navController, startDestination = "onboarding") {
             composable("onboarding") {
-                OnboardingView() {
+                OnboardingView{
                     navController.navigate("register")
                 }
             }

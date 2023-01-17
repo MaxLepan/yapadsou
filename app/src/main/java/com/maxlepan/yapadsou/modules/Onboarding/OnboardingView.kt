@@ -1,7 +1,10 @@
 package com.maxlepan.yapadsou.modules.Onboarding
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.GridCells
+import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.Text
@@ -17,16 +20,26 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.maxlepan.yapadsou.R
+import com.maxlepan.yapadsou.models.ProductItem
+import com.maxlepan.yapadsou.ui.components.ProductCard
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun OnboardingView(navigateToConnection: () -> Unit) {
-
+    var productItems : List<ProductItem> = listOf(
+        ProductItem(image = R.drawable.ic_launcher_background, user = R.drawable.ic_launcher_background, title = "", subTitle = ""),
+        ProductItem(image = R.drawable.ic_launcher_background, user = R.drawable.ic_launcher_background, title = "", subTitle = ""),
+        ProductItem(image = R.drawable.ic_launcher_background, user = R.drawable.ic_launcher_background, title = "titre", subTitle = "sous titre"),
+        ProductItem(image = R.drawable.ic_launcher_background, user = R.drawable.ic_launcher_background, title = "titre", subTitle = "sous titre")
+    )
     Column(
-        Modifier
+        verticalArrangement = Arrangement.SpaceBetween,
+        modifier = Modifier
             .fillMaxSize()
             .background(MediumBlue)
+            .padding(top = 70.dp, start = 55.dp, bottom = 50.dp, end = 55.dp)
     ) {
-        Spacer(Modifier.height(100.dp))
         Column(
             Modifier
                 .fillMaxWidth(),
@@ -42,7 +55,6 @@ fun OnboardingView(navigateToConnection: () -> Unit) {
                 style = Typography.h1,
                 color = Salmon
             )
-            Spacer(Modifier.height(80.dp))
         }
         Column(
             Modifier.fillMaxWidth(),
@@ -74,41 +86,21 @@ fun OnboardingView(navigateToConnection: () -> Unit) {
                 )
             }
             Spacer(Modifier.height(35.dp))
-            Column(
-                Modifier
+            LazyVerticalGrid(
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                cells = GridCells.Fixed(2),
+                modifier = Modifier
                     .clip(RoundedCornerShape(10))
                     .background(Color.White)
-                    .padding(20.dp)
+                    .padding(top = 20.dp, start = 20.dp, end = 20.dp, bottom = 10.dp)
             ) {
-                Row {
-                    Box(
-                        Modifier
-                            .size(105.dp)
-                            .clip(RoundedCornerShape(10))
-                            .background(Color.LightGray)
-                    )
-                    Spacer(Modifier.size(20.dp))
-                    Box(
-                        Modifier
-                            .size(105.dp)
-                            .clip(RoundedCornerShape(10))
-                            .background(Color.LightGray)
-                    )
-                }
-                Spacer(Modifier.size(20.dp))
-                Row {
-                    Box(
-                        Modifier
-                            .size(105.dp)
-                            .clip(RoundedCornerShape(10))
-                            .background(Color.LightGray)
-                    )
-                    Spacer(Modifier.size(20.dp))
-                    Box(
-                        Modifier
-                            .size(105.dp)
-                            .clip(RoundedCornerShape(10))
-                            .background(Color.LightGray)
+                items(productItems.size) { index ->
+                    ProductCard(
+                        title = productItems[index].title,
+                        subTitle = productItems[index].subTitle,
+                        imageProduct = productItems[index].image,
+                        iconUser = productItems[index].user,
+                        height = 105
                     )
                 }
             }
@@ -120,7 +112,6 @@ fun OnboardingView(navigateToConnection: () -> Unit) {
                 textAlign = TextAlign.Center
             )
         }
-        Spacer(Modifier.height(80.dp))
         Column(
             Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -132,7 +123,10 @@ fun OnboardingView(navigateToConnection: () -> Unit) {
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = Salmon
                 ),
-                shape = RoundedCornerShape(25)
+                shape = RoundedCornerShape(25),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(height = 56.dp)
             ) {
                 Text(
                     "C'EST PARTI!",
@@ -150,7 +144,7 @@ fun OnboardingView(navigateToConnection: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun OnboardingPreview() {
-    OnboardingView {
+    OnboardingView{
 
     }
 }

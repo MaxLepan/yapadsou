@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.maxlepan.yapadsou.modules.Connection.ConnectionView
 import com.maxlepan.yapadsou.modules.Home.Home
+import com.maxlepan.yapadsou.modules.Onboarding.OnboardingView
 import com.maxlepan.yapadsou.ui.theme.YapadsouTheme
 
 class MainActivity : ComponentActivity() {
@@ -23,8 +24,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Home()
-                    //ConnectionView()
+                    ConnectionView()
                 }
             }
         }

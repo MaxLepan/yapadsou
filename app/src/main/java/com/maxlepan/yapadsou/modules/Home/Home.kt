@@ -39,7 +39,7 @@ import com.maxlepan.yapadsou.ui.components.ProductCard
 @Composable
 fun Home() {
     var productItems : List<ProductItem> = listOf(
-        ProductItem(image = R.drawable.ic_launcher_background, user = R.drawable.ic_launcher_background, title = "", subTitle = ""),
+        ProductItem(image = R.drawable.ic_launcher_background, user = R.drawable.ic_launcher_background, title = "titre", subTitle = "sous titre"),
         ProductItem(image = R.drawable.ic_launcher_background, user = R.drawable.ic_launcher_background, title = "", subTitle = ""),
         ProductItem(image = R.drawable.ic_launcher_background, user = R.drawable.ic_launcher_background, title = "", subTitle = ""),
         ProductItem(image = R.drawable.ic_launcher_background, user = R.drawable.ic_launcher_background, title = "", subTitle = ""),
@@ -181,8 +181,8 @@ fun Home() {
                             )
                         }
                         LazyVerticalGrid(
-                            verticalArrangement = Arrangement.spacedBy(10.dp),
                             horizontalArrangement = Arrangement.spacedBy(10.dp),
+                            verticalArrangement = Arrangement.spacedBy(0.dp),
                             cells = GridCells.Fixed(2),
                             modifier = Modifier
                                 .padding(start = 25.dp, top = 0.dp, end = 25.dp, bottom = 77.dp)
@@ -192,7 +192,8 @@ fun Home() {
                                     title = productItems[index].title,
                                     subTitle = productItems[index].subTitle,
                                     imageProduct = productItems[index].image,
-                                    iconUser = productItems[index].user
+                                    iconUser = productItems[index].user,
+                                    height = 157
                                 )
                             }
                         }

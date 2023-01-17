@@ -1,13 +1,13 @@
 package com.maxlepan.yapadsou.ui.components
 
 
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
@@ -25,15 +25,18 @@ fun BlueButtonView(text: String, onClick : () -> Unit) {
             backgroundColor = Color(0xFF5F67EA)
         ),
         shape = RoundedCornerShape(15.dp),
+        modifier = Modifier
+            .height(height = 56.dp)
     ) {
         Text(
             text = text,
-            style = Typography.h2,
+            style = Typography.button,
             color = Color.White,
             textAlign = TextAlign.Center,
             modifier = Modifier
-                .padding(vertical = 18.dp)
                 .fillMaxWidth()
+                .padding(top = 3.dp)
+                .align(Alignment.CenterVertically)
         )
     }
 
