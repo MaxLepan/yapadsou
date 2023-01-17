@@ -36,8 +36,8 @@ object FirebaseManager {
         }
 
         fun check(result : QuerySnapshot) : Boolean {
-            if(password.length < 4) {
-                Toast.makeText(context, "Mot de passe trop court !", Toast.LENGTH_LONG).show()
+            if (!email.matches(Regex("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}\$"))) {
+                Toast.makeText(context, "Adresse Email invalide !", Toast.LENGTH_LONG).show()
                 return false
             }
 
@@ -46,6 +46,11 @@ object FirebaseManager {
                 return false
             }
 
+            if(password.length < 4) {
+                Toast.makeText(context, "Mot de passe trop court !", Toast.LENGTH_LONG).show()
+                return false
+            }
+            
             if (password != confirmPassword) {
                 Toast.makeText(context, "Mot de passe different", Toast.LENGTH_LONG).show()
                 return false
