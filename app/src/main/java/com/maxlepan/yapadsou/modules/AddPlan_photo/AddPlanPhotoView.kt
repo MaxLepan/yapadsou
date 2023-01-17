@@ -1,45 +1,51 @@
 package com.maxlepan.yapadsou.modules.AddPlan_desc
 
+import android.graphics.Bitmap
+import android.graphics.ImageDecoder
+import android.net.Uri
+import android.os.Build
+import android.provider.MediaStore
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material.*
+import androidx.compose.material.Button
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
-import com.maxlepan.yapadsou.R
 import com.maxlepan.yapadsou.ui.components.BlueButtonView
-import com.maxlepan.yapadsou.ui.components.CategoryCard
 import com.maxlepan.yapadsou.ui.components.Footer
-import com.maxlepan.yapadsou.ui.components.InputView
-import com.maxlepan.yapadsou.ui.theme.Inter
 import com.maxlepan.yapadsou.ui.theme.MediumBlue
 import com.maxlepan.yapadsou.ui.theme.Typography
 
 @Composable
-fun AddPlanDescView(navigateToAddPlanPhoto: () -> Unit) {
-    var title by remember { mutableStateOf(TextFieldValue("")) }
-    var description by remember { mutableStateOf(TextFieldValue("")) }
-    var link by remember { mutableStateOf(TextFieldValue("")) }
+fun AddPlanPhotoView() {
+    var imageUri by remember {
+        mutableStateOf<Uri?>(null)
+    }
+    val context = LocalContext.current
+    val bitmap = remember {
+        mutableStateOf<Bitmap?>(null)
+    }
+
+    val launcher = rememberLauncherForActivityResult(
+        contract =
+        ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        imageUri = uri
+    }
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -96,14 +102,14 @@ fun AddPlanDescView(navigateToAddPlanPhoto: () -> Unit) {
                                 modifier = Modifier
                                     .size(30.dp, 5.dp)
                                     .clip(RoundedCornerShape(10.dp))
-                                    .background(MediumBlue)
+                                    .background(Color.LightGray)
                             )
                             Spacer(Modifier.width(10.dp))
                             Box(
                                 modifier = Modifier
                                     .size(30.dp, 5.dp)
                                     .clip(RoundedCornerShape(10.dp))
-                                    .background(Color.LightGray)
+                                    .background(MediumBlue)
                             )
                         }
                         Column(
@@ -113,79 +119,59 @@ fun AddPlanDescView(navigateToAddPlanPhoto: () -> Unit) {
 
                             ) {
                             Column(
-                                modifier = Modifier.fillMaxWidth()
-                            ) {
-                                Text(
-                                    text = "Titre",
-                                    color = Color(0xff1b191a),
-                                    style = Typography.h3,
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(0.dp, 0.dp, 0.dp, 5.dp)
-                                )
-                                InputView(
-                                    placeholder = "Abonnement 1 an - Basic-Fit",
-                                    value = title,
-                                    callback = { newTitle ->
-                                        title = newTitle
-                                    },
-                                    icon = null,
-                                    isPassword = false,
-                                    keyboardType = KeyboardType.Text
-                                )
-                            }
-                            Column(
-                                modifier = Modifier.fillMaxWidth()
-                            ) {
-                                Text(
-                                    text = "Description",
-                                    color = Color(0xff1b191a),
-                                    style = Typography.h3,
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(0.dp, 20.dp, 0.dp, 5.dp)
-                                )
-                                InputView(
-                                    placeholder = "Ne soit pas trop bavard, on s’en fout, va à l’essentiel",
-                                    value = description,
-                                    callback = { newDescription ->
-                                        description = newDescription
-                                    },
-                                    icon = null,
-                                    isPassword = false,
-                                    keyboardType = KeyboardType.Text
-                                )
-                            }
-                            Column(
                                 modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(bottom = 20.dp)
+                                    .fillMaxWidth(),
+                                horizontalAlignment = Alignment.CenterHorizontally
                             ) {
                                 Text(
-                                    text = "Lien",
+                                    text = "Photo du bon plan",
                                     color = Color(0xff1b191a),
                                     style = Typography.h3,
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .padding(0.dp, 20.dp, 0.dp, 5.dp)
+                                        .padding(0.dp, 0.dp, 0.dp, 5.dp),
+                                    textAlign = TextAlign.Center
                                 )
-                                InputView(
-                                    placeholder = "www.lienverstonbonplan.com",
-                                    value = link,
-                                    callback = { newLink ->
-                                        link = newLink
+                                Button(
+                                    onClick = {
+                                        launcher.launch("image/*")
                                     },
-                                    icon = null,
-                                    isPassword = false,
-                                    keyboardType = KeyboardType.Uri
-                                )
-                            }
-                            BlueButtonView(
-                                text = "Suivant",
-                                onClick = {
-                                    navigateToAddPlanPhoto()
+                                    colors = ButtonDefaults.buttonColors(
+                                        backgroundColor = Color(0xFF5F67EA)
+                                    ),
+                                    modifier = Modifier
+                                        .padding(20.dp)
+                                        .size(150.dp)
+                                    ) {
+                                    Text(
+                                        text = "+",
+                                        color = Color.White,
+                                        fontSize = 50.sp
+                                    )
                                 }
-                            )
+                                imageUri?.let {
+                                    if (Build.VERSION.SDK_INT < 28) {
+                                        bitmap.value = MediaStore.Images
+                                            .Media.getBitmap(context.contentResolver, it)
+
+                                    } else {
+                                        val source = ImageDecoder
+                                            .createSource(context.contentResolver, it)
+                                        bitmap.value = ImageDecoder.decodeBitmap(source)
+                                    }
+
+                                    bitmap.value?.let { btm ->
+                                        Image(
+                                            bitmap = btm.asImageBitmap(),
+                                            contentDescription = null,
+                                            modifier = Modifier.size(400.dp)
+                                        )
+                                    }
+                                }
+                            }
+                            BlueButtonView(text = "Ajouter ce bon plan") {
+
+                            }
                         }
                     }
                 }
@@ -201,8 +187,6 @@ fun AddPlanDescView(navigateToAddPlanPhoto: () -> Unit) {
 
 @Preview(showBackground = true)
 @Composable
-fun AddPlanDescPreview() {
-    AddPlanDescView {
-
-    }
+fun AddPlanPhotoPreview() {
+    AddPlanPhotoView()
 }

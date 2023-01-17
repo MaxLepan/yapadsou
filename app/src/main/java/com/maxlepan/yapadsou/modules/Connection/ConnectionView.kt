@@ -14,6 +14,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.maxlepan.yapadsou.modules.AddPlan_desc.AddPlanDescView
+import com.maxlepan.yapadsou.modules.AddPlan_desc.AddPlanPhotoView
 import com.maxlepan.yapadsou.modules.Connection.Login.LoginView
 import com.maxlepan.yapadsou.modules.Connection.Register.RegisterView
 import com.maxlepan.yapadsou.modules.Home.Home
@@ -33,7 +35,7 @@ fun ConnectionView() {
     ) {
         NavHost(navController = navController, startDestination = "onboarding") {
             composable("onboarding") {
-                OnboardingView{
+                OnboardingView {
                     navController.navigate("register")
                 }
             }
@@ -62,8 +64,17 @@ fun ConnectionView() {
             composable("home") {
                 Home()
             }
+            composable("add-plan-description") {
+                AddPlanDescView(
+                    navigateToAddPlanPhoto = {
+                        navController.navigate("add-plan-photo")
+                    }
+                )
+            }
+            composable("add-plan-photo") {
+                AddPlanPhotoView()
+            }
         }
-
 
 
     }

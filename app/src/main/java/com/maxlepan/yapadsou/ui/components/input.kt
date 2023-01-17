@@ -72,7 +72,7 @@ fun InputView(
 
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = false)
 @Composable
 fun InputViewPreview() {
     var test by remember { mutableStateOf(TextFieldValue("")) }
