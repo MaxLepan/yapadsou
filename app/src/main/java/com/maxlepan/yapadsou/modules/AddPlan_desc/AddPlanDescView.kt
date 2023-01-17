@@ -26,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import androidx.navigation.NavHostController
 import com.maxlepan.yapadsou.R
 import com.maxlepan.yapadsou.ui.components.BlueButtonView
 import com.maxlepan.yapadsou.ui.components.CategoryCard
@@ -36,7 +37,7 @@ import com.maxlepan.yapadsou.ui.theme.MediumBlue
 import com.maxlepan.yapadsou.ui.theme.Typography
 
 @Composable
-fun AddPlanDescView(navigateToAddPlanPhoto: () -> Unit) {
+fun AddPlanDescView(navController : NavHostController?, navigateToAddPlanPhoto: () -> Unit) {
     var title by remember { mutableStateOf(TextFieldValue("")) }
     var description by remember { mutableStateOf(TextFieldValue("")) }
     var link by remember { mutableStateOf(TextFieldValue("")) }
@@ -65,8 +66,8 @@ fun AddPlanDescView(navigateToAddPlanPhoto: () -> Unit) {
                                 .fillMaxWidth()
                                 .padding(0.dp, 58.dp, 0.dp, 0.dp),
                             horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Column() {
+                        ){
+                            Column(){
                                 Text(
                                     text = "Ajouter",
                                     color = Color.White,
@@ -129,7 +130,6 @@ fun AddPlanDescView(navigateToAddPlanPhoto: () -> Unit) {
                                     callback = { newTitle ->
                                         title = newTitle
                                     },
-                                    icon = null,
                                     isPassword = false,
                                     keyboardType = KeyboardType.Text
                                 )
@@ -151,7 +151,6 @@ fun AddPlanDescView(navigateToAddPlanPhoto: () -> Unit) {
                                     callback = { newDescription ->
                                         description = newDescription
                                     },
-                                    icon = null,
                                     isPassword = false,
                                     keyboardType = KeyboardType.Text
                                 )
@@ -175,7 +174,6 @@ fun AddPlanDescView(navigateToAddPlanPhoto: () -> Unit) {
                                     callback = { newLink ->
                                         link = newLink
                                     },
-                                    icon = null,
                                     isPassword = false,
                                     keyboardType = KeyboardType.Uri
                                 )
@@ -192,7 +190,8 @@ fun AddPlanDescView(navigateToAddPlanPhoto: () -> Unit) {
             },
             bottomBar = {
                 Footer(
-                    selected = 1
+                    selected = 1,
+                    navController = navController
                 )
             }
         )
@@ -201,8 +200,8 @@ fun AddPlanDescView(navigateToAddPlanPhoto: () -> Unit) {
 
 @Preview(showBackground = true)
 @Composable
-fun AddPlanDescPreview() {
-    AddPlanDescView {
+fun AddPlanDescPreview(){
+    AddPlanDescView(null){
 
     }
 }

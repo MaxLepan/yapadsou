@@ -1,6 +1,7 @@
 package com.maxlepan.yapadsou.modules.Home
 
 import android.graphics.drawable.Icon
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -12,7 +13,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.*
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -22,30 +23,34 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role.Companion.Image
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.maxlepan.yapadsou.R
 import com.maxlepan.yapadsou.models.IconFooter
 import com.maxlepan.yapadsou.models.ProductItem
+import com.maxlepan.yapadsou.providers.FirebaseManager
 import com.maxlepan.yapadsou.ui.theme.Inter
 import com.maxlepan.yapadsou.ui.theme.Typography
 import com.maxlepan.yapadsou.ui.components.CategoryCard
 import com.maxlepan.yapadsou.ui.components.Footer
+import com.maxlepan.yapadsou.ui.components.InputView
 import com.maxlepan.yapadsou.ui.components.ProductCard
+
+
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun Home() {
-    var productItems : List<ProductItem> = listOf(
-        ProductItem(image = R.drawable.ic_launcher_background, user = R.drawable.ic_launcher_background, title = "titre", subTitle = "sous titre"),
-        ProductItem(image = R.drawable.ic_launcher_background, user = R.drawable.ic_launcher_background, title = "", subTitle = ""),
-        ProductItem(image = R.drawable.ic_launcher_background, user = R.drawable.ic_launcher_background, title = "", subTitle = ""),
-        ProductItem(image = R.drawable.ic_launcher_background, user = R.drawable.ic_launcher_background, title = "", subTitle = ""),
-        ProductItem(image = R.drawable.ic_launcher_background, user = R.drawable.ic_launcher_background, title = "", subTitle = "")
-    )
-
+fun Home(navController : NavHostController?) {
+    var search by remember { mutableStateOf(TextFieldValue("")) }
+    var productItems = remember { mutableStateListOf<ProductItem>() }
+    FirebaseManager.getItemsWithLimit(10){ result ->
+        Log.d("###", result.documents.toString())
+    }
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -97,28 +102,21 @@ fun Home() {
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(height = 56.dp)
-                                .clip(RoundedCornerShape(20.dp))
-                                .background(Color.White)
-                                .padding(30.dp, 0.dp),
+                                .height(height = 112.dp)
+                                .padding(20.dp, 0.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.ic_launcher_background),
-                                contentDescription = "Vector",
-                                modifier = Modifier
-                                    .size(size = 18.dp)
+                            InputView(
+                                placeholder = "Cherche un bon plan",
+                                value = search,
+                                callback = { new ->
+                                    search = new
+                                },
+                                icon = R.drawable.search_icon,
+                                keyboardType = KeyboardType.Text,
+                                isPassword = false,
                             )
-                            Text(
-                                text = "Cherche un bon plan",
-                                color = Color(0xffd2cece),
-                                style = Typography.subtitle1,
-                                modifier = Modifier
-                                    .padding(start = 10.dp)
-                            )
-
                         }
-
                     }
 
                     Column(
@@ -202,7 +200,8 @@ fun Home() {
             },
             bottomBar = {
                 Footer(
-                    selected = 0
+                    selected = 0,
+                    navController = navController
                 )
             }
         )
@@ -212,5 +211,5 @@ fun Home() {
 @Preview(showBackground = true)
 @Composable
 fun HomePreview() {
-    Home()
+    Home(null)
 }

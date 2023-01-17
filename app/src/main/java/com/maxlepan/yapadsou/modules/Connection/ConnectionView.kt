@@ -62,7 +62,7 @@ fun ConnectionView() {
                 )
             }
             composable("home") {
-                Home()
+                Home(navController)
             }
             composable("add-plan-description") {
                 AddPlanDescView(
