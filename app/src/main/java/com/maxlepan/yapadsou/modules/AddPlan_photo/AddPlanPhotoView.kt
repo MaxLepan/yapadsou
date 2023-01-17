@@ -25,13 +25,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import androidx.navigation.NavHostController
 import com.maxlepan.yapadsou.ui.components.BlueButtonView
 import com.maxlepan.yapadsou.ui.components.Footer
 import com.maxlepan.yapadsou.ui.theme.MediumBlue
 import com.maxlepan.yapadsou.ui.theme.Typography
 
 @Composable
-fun AddPlanPhotoView() {
+fun AddPlanPhotoView(navController : NavHostController?) {
     var imageUri by remember {
         mutableStateOf<Uri?>(null)
     }
@@ -178,7 +179,8 @@ fun AddPlanPhotoView() {
             },
             bottomBar = {
                 Footer(
-                    selected = 1
+                    selected = 1,
+                    navController = navController
                 )
             }
         )
@@ -188,5 +190,5 @@ fun AddPlanPhotoView() {
 @Preview(showBackground = true)
 @Composable
 fun AddPlanPhotoPreview() {
-    AddPlanPhotoView()
+    AddPlanPhotoView(null)
 }

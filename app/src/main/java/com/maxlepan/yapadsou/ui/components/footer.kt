@@ -32,7 +32,7 @@ fun Footer(selected: Int, navController: NavHostController?) {
         IconFooter(
             icon = R.drawable.circle_add_icon,
             iconActive = R.drawable.circle_add_icon_active,
-            navDirection = "onboarding",
+            navDirection = "add-plan-description",
             selected = false
         ),
         IconFooter(
@@ -69,9 +69,15 @@ fun Footer(selected: Int, navController: NavHostController?) {
                     if (iconFooter.selected) {
                         res = iconFooter.iconActive
                     }
-                    Button(onClick = {
-                        navController?.navigate(iconFooter.navDirection)
-                    }) {
+                    Button(
+                        onClick = {
+                            if (!iconFooter.selected) {
+                                navController?.navigate(iconFooter.navDirection)
+                            }
+                        },
+                        modifier = Modifier
+                            .padding(0.dp)
+                    ) {
                         Image(
 
                             painter = painterResource(id = res),

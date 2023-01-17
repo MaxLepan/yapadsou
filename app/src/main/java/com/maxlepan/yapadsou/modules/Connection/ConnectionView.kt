@@ -68,11 +68,12 @@ fun ConnectionView() {
                 AddPlanDescView(
                     navigateToAddPlanPhoto = {
                         navController.navigate("add-plan-photo")
-                    }
+                    },
+                    navController = navController
                 )
             }
             composable("add-plan-photo") {
-                AddPlanPhotoView()
+                AddPlanPhotoView(navController)
             }
         }
 
