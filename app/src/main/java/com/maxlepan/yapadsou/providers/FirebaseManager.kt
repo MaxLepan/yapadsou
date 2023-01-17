@@ -50,7 +50,7 @@ object FirebaseManager {
                 Toast.makeText(context, "Mot de passe trop court !", Toast.LENGTH_LONG).show()
                 return false
             }
-            
+
             if (password != confirmPassword) {
                 Toast.makeText(context, "Mot de passe different", Toast.LENGTH_LONG).show()
                 return false
@@ -73,7 +73,12 @@ object FirebaseManager {
         return true
     }
 
-    fun connection(email: String, password: String, callback: () -> Unit, context: Context): Boolean {
+    fun connection(
+        email: String,
+        password: String,
+        callback: () -> Unit,
+        context: Context
+    ): Boolean {
         val users = db.collection("users")
 
         users
@@ -94,4 +99,14 @@ object FirebaseManager {
         return true
     }
 
+    fun getItemsWithLimit(number : Long, callback: (QuerySnapshot) -> Unit)  : Boolean {
+
+        val items = db.collection("items").limit(number)
+
+        items.get().addOnSuccessListener { result ->
+            callback(result)
+        }
+
+        return true
+    }
 }
