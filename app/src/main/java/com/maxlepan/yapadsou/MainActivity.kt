@@ -23,8 +23,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Home()
-                    //ConnectionView()
+                    //Home()
+                    ConnectionView()
                 }
             }
         }

@@ -7,6 +7,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.KeyboardType
@@ -59,12 +60,22 @@ fun LoginView(navigateToRegister: () -> Unit, navigateToHome: () -> Unit) {
                     .align(Alignment.End)
             )
 
+            Box() {
+                val context = LocalContext.current
 
-            BlueButtonView(text = "Se connecter") {
-                FirebaseManager.connection(email = email.text, password = password.text) {
-                    navigateToHome()
+                BlueButtonView(text = "Se connecter") {
+                    FirebaseManager.connection(
+                        email = email.text,
+                        password = password.text,
+                        context = context,
+                        callback = {
+                            navigateToHome()
+                        }
+                    )
                 }
             }
+
+
 
 
         }

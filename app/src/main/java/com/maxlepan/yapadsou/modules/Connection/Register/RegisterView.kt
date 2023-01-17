@@ -1,11 +1,13 @@
 package com.maxlepan.yapadsou.modules.Connection.Register
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.KeyboardType
@@ -64,13 +66,25 @@ fun RegisterView(navigateToLogin: () -> Unit, navigateToHome: () -> Unit) {
                 modifier = Modifier.padding(top = 63.dp, bottom = 12.dp)
             )
 
-            BlueButtonView(text = "S'enregistrer") {
-                if (password != confirmPassword) {
-                    return@BlueButtonView
-                }
+            Box() {
+                val context = LocalContext.current
 
-                FirebaseManager.registration(email = email.text, password = password.text) {
-                    navigateToHome()
+
+
+                BlueButtonView(text = "S'enregistrer") {
+
+
+
+
+                    FirebaseManager.registration(
+                        email = email.text,
+                        password = password.text,
+                        confirmPassword = confirmPassword.text,
+                        context = context,
+                        callback = {
+                            navigateToHome()
+                        }
+                    )
                 }
             }
         }
