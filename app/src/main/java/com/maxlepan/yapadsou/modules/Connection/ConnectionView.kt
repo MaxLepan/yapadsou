@@ -62,6 +62,8 @@ fun ConnectionView() {
             composable("home") {
                 Home()
             }
+
+
         }
 
 

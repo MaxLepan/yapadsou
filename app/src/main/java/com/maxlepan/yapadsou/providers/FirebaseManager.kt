@@ -2,6 +2,7 @@ package com.maxlepan.yapadsou.providers
 
 import android.content.Context
 import android.widget.Toast
+import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -99,12 +100,22 @@ object FirebaseManager {
         return true
     }
 
-    fun getItemsWithLimit(number : Long, callback: (QuerySnapshot) -> Unit)  : Boolean {
+    fun getItemsWithLimit(number : Long, callback: (QuerySnapshot) -> Unit): Boolean {
 
         val items = db.collection("items").limit(number)
 
-        items.get().addOnSuccessListener { result ->
-            callback(result)
+        items.get().addOnSuccessListener(callback)
+
+        return true
+    }
+
+    fun searchItemsByTerm(term : String, callback: (List<QueryDocumentSnapshot>) -> Unit): Boolean {
+
+        val itemsRef = db.collection("items").get()
+
+        itemsRef.addOnSuccessListener{ result ->
+            val res = result.filter { it.contains(term) }
+            callback(res)
         }
 
         return true
