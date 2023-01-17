@@ -1,9 +1,12 @@
 package com.maxlepan.yapadsou.modules.Home
 
 import android.graphics.drawable.Icon
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.GridCells
+import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
@@ -24,13 +27,25 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.maxlepan.yapadsou.R
+import com.maxlepan.yapadsou.models.IconFooter
+import com.maxlepan.yapadsou.models.ProductItem
 import com.maxlepan.yapadsou.ui.theme.Inter
 import com.maxlepan.yapadsou.ui.theme.Typography
 import com.maxlepan.yapadsou.ui.components.CategoryCard
 import com.maxlepan.yapadsou.ui.components.Footer
+import com.maxlepan.yapadsou.ui.components.ProductCard
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Home() {
+    var productItems : List<ProductItem> = listOf(
+        ProductItem(image = R.drawable.ic_launcher_background, user = R.drawable.ic_launcher_background, title = "", subTitle = ""),
+        ProductItem(image = R.drawable.ic_launcher_background, user = R.drawable.ic_launcher_background, title = "", subTitle = ""),
+        ProductItem(image = R.drawable.ic_launcher_background, user = R.drawable.ic_launcher_background, title = "", subTitle = ""),
+        ProductItem(image = R.drawable.ic_launcher_background, user = R.drawable.ic_launcher_background, title = "", subTitle = ""),
+        ProductItem(image = R.drawable.ic_launcher_background, user = R.drawable.ic_launcher_background, title = "", subTitle = "")
+    )
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -57,8 +72,8 @@ fun Home() {
                                 .fillMaxWidth()
                                 .padding(0.dp, 58.dp, 0.dp, 45.dp),
                             horizontalArrangement = Arrangement.SpaceBetween
-                        ){
-                            Column(){
+                        ) {
+                            Column() {
                                 Text(
                                     text = "COUCOU TOI,",
                                     color = Color.White,
@@ -75,7 +90,8 @@ fun Home() {
                                 contentDescription = "Ellipse 1",
                                 modifier = Modifier
                                     .size(size = 45.dp)
-                                    .clip(shape = CircleShape))
+                                    .clip(shape = CircleShape)
+                            )
                         }
 
                         Row(
@@ -112,17 +128,33 @@ fun Home() {
                             .heightIn(min = 700.dp)
                             .background(color = Color(0xfff7f7f7)),
                         horizontalAlignment = Alignment.CenterHorizontally
-                    ){
+                    ) {
                         Row(
                             modifier = Modifier
                                 .padding(25.dp, 30.dp)
                                 .fillMaxWidth(),
                             horizontalArrangement = Arrangement.Center
                         ) {
-                            CategoryCard(title = "courses", color = Color(0xff605DF5), icon = R.drawable.shopping_icon)
-                            CategoryCard(title = "sport", color = Color(0xffF4696A), icon = R.drawable.sport_icon)
-                            CategoryCard(title = "trains", color = Color(0xff579BFE), icon = R.drawable.transport_icon)
-                            CategoryCard(title = "soirées", color = Color(0xff7C8CF9), icon = R.drawable.party_icon)
+                            CategoryCard(
+                                title = "courses",
+                                color = Color(0xff605DF5),
+                                icon = R.drawable.shopping_icon
+                            )
+                            CategoryCard(
+                                title = "sport",
+                                color = Color(0xffF4696A),
+                                icon = R.drawable.sport_icon
+                            )
+                            CategoryCard(
+                                title = "trains",
+                                color = Color(0xff579BFE),
+                                icon = R.drawable.transport_icon
+                            )
+                            CategoryCard(
+                                title = "soirées",
+                                color = Color(0xff7C8CF9),
+                                icon = R.drawable.party_icon
+                            )
                         }
                         Row(
                             modifier = Modifier
@@ -143,9 +175,26 @@ fun Home() {
                                 style = TextStyle(
                                     fontFamily = Inter,
                                     fontSize = 14.sp,
-                                    fontWeight = FontWeight.Bold),
+                                    fontWeight = FontWeight.Bold
+                                ),
                                 modifier = Modifier
                             )
+                        }
+                        LazyVerticalGrid(
+                            verticalArrangement = Arrangement.spacedBy(10.dp),
+                            horizontalArrangement = Arrangement.spacedBy(10.dp),
+                            cells = GridCells.Fixed(2),
+                            modifier = Modifier
+                                .padding(start = 25.dp, top = 0.dp, end = 25.dp, bottom = 77.dp)
+                        ) {
+                            items(productItems.size) { index ->
+                                ProductCard(
+                                    title = productItems[index].title,
+                                    subTitle = productItems[index].subTitle,
+                                    imageProduct = productItems[index].image,
+                                    iconUser = productItems[index].user
+                                )
+                            }
                         }
                     }
                 }
@@ -156,83 +205,6 @@ fun Home() {
                 )
             }
         )
-    }
-}
-
-@Composable
-fun ProductCard() {
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = Modifier
-            .width(width = 159.dp)
-            .height(height = 162.dp)
-    ) {
-        Box(
-            modifier = Modifier
-                .width(width = 159.dp)
-                .height(height = 162.dp)
-                .background(color = Color.White))
-        Image(
-            painter = painterResource(id = R.drawable.ic_launcher_background),
-            contentDescription = "image",
-            modifier = Modifier
-                .width(width = 144.dp)
-                .height(height = 90.dp)
-                .clip(shape = RoundedCornerShape(10.dp)))
-        Text(
-            text = "Giga MAXI Tacos",
-            color = Color(0xff1b191a),
-            style = TextStyle(
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Bold),
-            modifier = Modifier
-                .width(width = 142.dp)
-                .height(height = 16.dp))
-        Text(
-            text = "5€99, dépêche toi !",
-            color = Color(0xff1b191a),
-            style = TextStyle(
-                fontSize = 10.sp,
-                fontWeight = FontWeight.Medium),
-            modifier = Modifier
-                .width(width = 142.dp)
-                .height(height = 13.dp))
-        Image(
-            painter = painterResource(id = R.drawable.ic_launcher_background),
-            contentDescription = "logo",
-            modifier = Modifier
-                .size(size = 36.dp))
-    }
-}
-
-@Composable
-fun CategoryCard() {
-    Column(
-        verticalArrangement = Arrangement.SpaceBetween,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .width(width = 57.dp)
-    ) {
-        Box(
-            modifier = Modifier
-                .size(size = 57.dp)
-                .background(color = Color(0xff7c8cf9)))
-        Spacer(
-            modifier = Modifier
-                .size(size = 24.dp))
-        Spacer(
-            modifier = Modifier
-                .height(height = 26.dp))
-        Text(
-            text = "Soirées",
-            color = Color(0xff7c8cf9),
-            textAlign = TextAlign.Center,
-            style = TextStyle(
-                fontSize = 10.sp,
-                fontWeight = FontWeight.Bold),
-            modifier = Modifier
-                .width(width = 72.dp)
-                .height(height = 16.dp))
     }
 }
 
