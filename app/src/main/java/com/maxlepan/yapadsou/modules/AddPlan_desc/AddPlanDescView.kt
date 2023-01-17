@@ -30,6 +30,7 @@ import com.maxlepan.yapadsou.R
 import com.maxlepan.yapadsou.ui.components.BlueButtonView
 import com.maxlepan.yapadsou.ui.components.CategoryCard
 import com.maxlepan.yapadsou.ui.components.Footer
+import com.maxlepan.yapadsou.ui.components.InputView
 import com.maxlepan.yapadsou.ui.theme.Inter
 import com.maxlepan.yapadsou.ui.theme.MediumBlue
 import com.maxlepan.yapadsou.ui.theme.Typography
@@ -37,6 +38,8 @@ import com.maxlepan.yapadsou.ui.theme.Typography
 @Composable
 fun AddPlanDescView (){
     var title by remember { mutableStateOf(TextFieldValue("")) }
+    var description by remember { mutableStateOf(TextFieldValue("")) }
+    var link by remember { mutableStateOf(TextFieldValue("")) }
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -120,24 +123,15 @@ fun AddPlanDescView (){
                                         .fillMaxWidth()
                                         .padding(0.dp, 0.dp, 0.dp, 5.dp)
                                 )
-                                TextField(
+                                InputView(
+                                    placeholder = "Abonnement 1 an - Basic-Fit",
                                     value = title,
-                                    onValueChange = { newTitle ->
+                                    callback = { newTitle ->
                                         title = newTitle
                                     },
-                                    placeholder = { Text("Abonnement 1 an - Basic-Fit") },
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .clip(RoundedCornerShape(20.dp)),
-                                    colors = TextFieldDefaults.textFieldColors(
-                                        textColor = Color.Gray,
-                                        disabledTextColor = Color.Transparent,
-                                        backgroundColor = Color.White,
-                                        focusedIndicatorColor = Color.Transparent,
-                                        unfocusedIndicatorColor = Color.Transparent,
-                                        disabledIndicatorColor = Color.Transparent
-                                    )
-
+                                    icon = null,
+                                    isPassword = false,
+                                    keyboardType = KeyboardType.Text
                                 )
                             }
                             Column (
@@ -151,29 +145,21 @@ fun AddPlanDescView (){
                                         .fillMaxWidth()
                                         .padding(0.dp, 20.dp, 0.dp, 5.dp)
                                 )
-                                TextField(
-                                    value = title,
-                                    onValueChange = { newTitle ->
-                                        title = newTitle
+                                InputView(
+                                    placeholder = "Ne soit pas trop bavard, on s’en fout, va à l’essentiel",
+                                    value = description,
+                                    callback = { newDescription ->
+                                        description = newDescription
                                     },
-                                    placeholder = { Text("Ne soit pas trop bavard, on s’en fout, va à l’essentiel") },
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .clip(RoundedCornerShape(20.dp))
-                                        .height(100.dp),
-                                    colors = TextFieldDefaults.textFieldColors(
-                                        textColor = Color.Gray,
-                                        disabledTextColor = Color.Transparent,
-                                        backgroundColor = Color.White,
-                                        focusedIndicatorColor = Color.Transparent,
-                                        unfocusedIndicatorColor = Color.Transparent,
-                                        disabledIndicatorColor = Color.Transparent
-                                    )
-
+                                    icon = null,
+                                    isPassword = false,
+                                    keyboardType = KeyboardType.Text
                                 )
                             }
                             Column (
-                                modifier = Modifier.fillMaxWidth()
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(bottom = 20.dp)
                             ) {
                                 Text(
                                     text = "Lien",
@@ -183,29 +169,19 @@ fun AddPlanDescView (){
                                         .fillMaxWidth()
                                         .padding(0.dp, 20.dp, 0.dp, 5.dp)
                                 )
-                                TextField(
-                                    value = title,
-                                    onValueChange = { newTitle ->
-                                        title = newTitle
+                                InputView(
+                                    placeholder = "www.lienverstonbonplan.com",
+                                    value = link,
+                                    callback = { newLink ->
+                                        link = newLink
                                     },
-                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Uri),
-                                    placeholder = { Text("www.lienverstonbonplan.com") },
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .clip(RoundedCornerShape(20.dp)),
-                                    colors = TextFieldDefaults.textFieldColors(
-                                        textColor = Color.Gray,
-                                        disabledTextColor = Color.Transparent,
-                                        backgroundColor = Color.White,
-                                        focusedIndicatorColor = Color.Transparent,
-                                        unfocusedIndicatorColor = Color.Transparent,
-                                        disabledIndicatorColor = Color.Transparent
-                                    )
-
+                                    icon = null,
+                                    isPassword = false,
+                                    keyboardType = KeyboardType.Uri
                                 )
                             }
                             BlueButtonView(text = "Suivant") {
-                                
+
                             }
                         }
                     }

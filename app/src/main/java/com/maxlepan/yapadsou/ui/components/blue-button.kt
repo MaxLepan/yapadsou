@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.maxlepan.yapadsou.ui.theme.*
 
 
 @Composable
@@ -27,6 +28,8 @@ fun BlueButtonView(text: String, onClick : () -> Unit) {
     ) {
         Text(
             text = text,
+            style = Typography.h2,
+            color = Color.White,
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .padding(vertical = 18.dp)
