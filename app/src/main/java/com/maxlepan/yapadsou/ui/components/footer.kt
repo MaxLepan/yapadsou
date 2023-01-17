@@ -1,11 +1,14 @@
 package com.maxlepan.yapadsou.ui.components
 
 import android.net.eap.EapSessionConfig.EapTtlsConfig
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonColors
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.*
@@ -75,8 +78,9 @@ fun Footer(selected: Int, navController: NavHostController?) {
                                 navController?.navigate(iconFooter.navDirection)
                             }
                         },
-                        modifier = Modifier
-                            .padding(0.dp)
+                        colors = ButtonDefaults.buttonColors(
+                            backgroundColor = Color(0xffF2F2F2)
+                        )
                     ) {
                         Image(
 
@@ -85,8 +89,7 @@ fun Footer(selected: Int, navController: NavHostController?) {
                             modifier = Modifier
                                 .clip(RoundedCornerShape(5.dp))
                                 .background(color = Color(0xffF2F2F2))
-                                .size(50.dp)
-                                .padding(10.dp)
+                                .size(25.dp)
                         )
                     }
 
