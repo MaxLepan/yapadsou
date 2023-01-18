@@ -20,13 +20,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberAsyncImagePainter
 import com.maxlepan.yapadsou.R
 import com.maxlepan.yapadsou.ui.theme.Inter
 import com.maxlepan.yapadsou.ui.theme.Typography
 import kotlin.text.Typography
 
 @Composable
-fun ProductCard(title:String, subTitle:String, imageProduct:Int, iconUser:Int, height: Int) {
+fun ProductCard(title:String, subTitle:String, imageProduct : String, iconUser : String, height: Int) {
     Column (
         modifier = Modifier
             .padding(bottom = 5.dp)
@@ -55,8 +56,10 @@ fun ProductCard(title:String, subTitle:String, imageProduct:Int, iconUser:Int, h
                         .fillMaxWidth()
                         .height((height/2 + (height/10)).dp)
                 ){
+                    var imageProductPainter = painterResource(id = R.drawable.ic_launcher_background)
+                    if (imageProduct !== "") imageProductPainter = rememberAsyncImagePainter(imageProduct)
                     Image(
-                        painter = painterResource(id = imageProduct),
+                        painter = imageProductPainter,
                         contentDescription = "image",
                         alignment = Alignment.Center,
                         contentScale = ContentScale.Crop,
@@ -65,8 +68,10 @@ fun ProductCard(title:String, subTitle:String, imageProduct:Int, iconUser:Int, h
                             .height(height = (height/2).dp)
                             .clip(shape = RoundedCornerShape(10.dp))
                     )
+                    var imageUserPainter = painterResource(id = R.drawable.ic_launcher_background)
+                    if (iconUser !== "") imageUserPainter = rememberAsyncImagePainter(iconUser)
                     Image(
-                        painter = painterResource(id = iconUser),
+                        painter = imageUserPainter,
                         contentDescription = "logo",
                         modifier = Modifier
                             .clip(CircleShape)
@@ -110,5 +115,5 @@ fun ProductCard(title:String, subTitle:String, imageProduct:Int, iconUser:Int, h
 @Preview(showBackground = false)
 @Composable
 fun ProductCardPreview() {
-    ProductCard("Abonnement 1 an", "2 mois offerts", R.drawable.ic_launcher_background, R.drawable.ic_launcher_background, 105)
+    ProductCard("Abonnement 1 an", "2 mois offerts", "", "", 105)
 }

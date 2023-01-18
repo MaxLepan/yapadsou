@@ -1,6 +1,7 @@
 package com.maxlepan.yapadsou.providers
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
@@ -117,7 +118,6 @@ object FirebaseManager {
             val res = result.filter { it.contains(term) }
             callback(res)
         }
-
         return true
     }
 }

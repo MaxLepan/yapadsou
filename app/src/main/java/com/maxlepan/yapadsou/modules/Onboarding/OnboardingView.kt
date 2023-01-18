@@ -1,10 +1,11 @@
 package com.maxlepan.yapadsou.modules.Onboarding
 
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.Text
@@ -16,23 +17,41 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.maxlepan.yapadsou.ui.theme.*
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.google.firebase.firestore.ktx.toObject
 import com.maxlepan.yapadsou.R
 import com.maxlepan.yapadsou.models.ProductItem
+import com.maxlepan.yapadsou.providers.FirebaseManager
 import com.maxlepan.yapadsou.ui.components.ProductCard
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun OnboardingView(navigateToConnection: () -> Unit) {
-    var productItems : List<ProductItem> = listOf(
-        ProductItem(image = R.drawable.ic_launcher_background, user = R.drawable.ic_launcher_background, title = "", subTitle = ""),
-        ProductItem(image = R.drawable.ic_launcher_background, user = R.drawable.ic_launcher_background, title = "", subTitle = ""),
-        ProductItem(image = R.drawable.ic_launcher_background, user = R.drawable.ic_launcher_background, title = "titre", subTitle = "sous titre"),
-        ProductItem(image = R.drawable.ic_launcher_background, user = R.drawable.ic_launcher_background, title = "titre", subTitle = "sous titre")
-    )
+    var productItems = remember { mutableStateListOf<ProductItem>() }
+
+
+    LaunchedEffect(Unit) {
+        FirebaseManager.getItemsWithLimit(4) { result ->
+            Log.d("###", result.toString())
+            for (document in result) {
+                Log.d("###", document.toString())
+                val productItem = document.toObject<ProductItem>()
+                productItems.add(productItem)
+            }
+        }
+    }
+
+
+    LaunchedEffect(key1 = productItems) {
+        Log.d("###", "OnboardingView")
+    }
+
     Column(
         verticalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
@@ -88,7 +107,7 @@ fun OnboardingView(navigateToConnection: () -> Unit) {
             Spacer(Modifier.height(35.dp))
             LazyVerticalGrid(
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
-                cells = GridCells.Fixed(2),
+                columns = GridCells.Fixed(2),
                 modifier = Modifier
                     .clip(RoundedCornerShape(10))
                     .background(Color.White)
@@ -99,7 +118,7 @@ fun OnboardingView(navigateToConnection: () -> Unit) {
                         title = productItems[index].title,
                         subTitle = productItems[index].subTitle,
                         imageProduct = productItems[index].image,
-                        iconUser = productItems[index].user,
+                        iconUser = "",
                         height = 105
                     )
                 }
@@ -144,7 +163,7 @@ fun OnboardingView(navigateToConnection: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun OnboardingPreview() {
-    OnboardingView{
+    OnboardingView {
 
     }
 }
