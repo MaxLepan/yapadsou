@@ -42,11 +42,12 @@ import com.maxlepan.yapadsou.ui.components.ProductCard
 @Composable
 fun Home(navController: NavHostController?) {
     var search by remember { mutableStateOf(TextFieldValue("")) }
-    var productItems = remember { mutableStateListOf<ProductItem>() }
+    val productItems = remember { mutableStateListOf<ProductItem>() }
     FirebaseManager.getItemsWithLimit(10){ result ->
         for (document in result) {
             Log.d("###", document.id)
             val productItem = document.toObject<ProductItem>()
+            productItem.itemId = document.id
             productItems.add(productItem)
         }
     }
@@ -187,7 +188,7 @@ fun Home(navController: NavHostController?) {
                             items(productItems.size) { index ->
                                 Button(
                                     onClick = {
-
+                                              navController?.navigate("item/${productItems[index].itemId}")
                                     },
                                     colors = ButtonDefaults.buttonColors(
                                         backgroundColor = Color.Transparent

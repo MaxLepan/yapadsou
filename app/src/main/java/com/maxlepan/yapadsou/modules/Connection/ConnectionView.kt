@@ -23,6 +23,7 @@ import com.maxlepan.yapadsou.modules.Connection.Login.LoginView
 import com.maxlepan.yapadsou.modules.Connection.Register.RegisterView
 import com.maxlepan.yapadsou.modules.Home.Home
 import com.maxlepan.yapadsou.modules.Onboarding.OnboardingView
+import com.maxlepan.yapadsou.modules.Plan.PlanView
 import com.maxlepan.yapadsou.modules.User.UserEdit
 import com.maxlepan.yapadsou.providers.FirebaseManager
 
@@ -85,6 +86,12 @@ fun ConnectionView() {
             composable("user-edit") {
                 UserEdit(navController = navController) {
                     navController.navigate("home")
+                }
+            }
+            composable("item/{itemId}"){navBackStackEntry ->
+                val itemId = navBackStackEntry.arguments?.getString("itemId")
+                itemId?.let {
+                    PlanView(navController = navController, planId = itemId)
                 }
             }
 
