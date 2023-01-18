@@ -52,11 +52,7 @@ fun ConnectionView() {
                     navigateToHome = {
                         navController.navigate("home")
 
-                        FirebaseManager.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
-                            param(FirebaseAnalytics.Param.ITEM_ID, 0)
-                            param(FirebaseAnalytics.Param.ITEM_NAME, "test")
-                            param(FirebaseAnalytics.Param.CONTENT_TYPE, "test content")
-                        }
+
                     }
                 )
 

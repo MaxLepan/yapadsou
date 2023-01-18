@@ -15,6 +15,8 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.logEvent
 import com.maxlepan.yapadsou.providers.FirebaseManager
 import com.maxlepan.yapadsou.ui.components.BigTitleView
 import com.maxlepan.yapadsou.ui.components.BlueButtonView
@@ -69,12 +71,12 @@ fun RegisterView(navigateToLogin: () -> Unit, navigateToHome: () -> Unit) {
             Box() {
                 val context = LocalContext.current
 
-
-
                 BlueButtonView(text = "S'enregistrer") {
-
-
-
+                    FirebaseManager.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                        param(FirebaseAnalytics.Param.ITEM_ID, 0)
+                        param(FirebaseAnalytics.Param.ITEM_NAME, "Button Register")
+                        param(FirebaseAnalytics.Param.CONTENT_TYPE, "User have register")
+                    }
 
                     FirebaseManager.registration(
                         email = email.text,

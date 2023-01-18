@@ -18,8 +18,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.logEvent
 import com.maxlepan.yapadsou.R
 import com.maxlepan.yapadsou.models.IconFooter
+import com.maxlepan.yapadsou.providers.FirebaseManager
 import java.util.Objects
 import kotlin.math.round
 
@@ -75,6 +78,11 @@ fun Footer(selected: Int, navController: NavHostController?) {
                     Button(
                         onClick = {
                             if (!iconFooter.selected) {
+                                FirebaseManager.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                                    param(FirebaseAnalytics.Param.ITEM_ID, 1)
+                                    param(FirebaseAnalytics.Param.ITEM_NAME, "Button Footer")
+                                    param(FirebaseAnalytics.Param.CONTENT_TYPE, "User have navigate with footer")
+                                }
                                 navController?.navigate(iconFooter.navDirection)
                             }
                         },
