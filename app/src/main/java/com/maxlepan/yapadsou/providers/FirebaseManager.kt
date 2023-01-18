@@ -2,6 +2,8 @@ package com.maxlepan.yapadsou.providers
 
 import android.content.Context
 import android.widget.Toast
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
@@ -12,6 +14,8 @@ data class User(val email: String? = null, val password: String? = null)
 object FirebaseManager {
 
     private val db = Firebase.firestore
+
+    var firebaseAnalytics: FirebaseAnalytics = Firebase.analytics
 
     fun registration(
         email: String,

@@ -1,5 +1,6 @@
 package com.maxlepan.yapadsou.modules.Connection
 
+import android.os.Bundle
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -14,12 +15,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.logEvent
 import com.maxlepan.yapadsou.modules.AddPlan_desc.AddPlanDescView
 import com.maxlepan.yapadsou.modules.AddPlan_desc.AddPlanPhotoView
 import com.maxlepan.yapadsou.modules.Connection.Login.LoginView
 import com.maxlepan.yapadsou.modules.Connection.Register.RegisterView
 import com.maxlepan.yapadsou.modules.Home.Home
 import com.maxlepan.yapadsou.modules.Onboarding.OnboardingView
+import com.maxlepan.yapadsou.providers.FirebaseManager
 
 @Composable
 fun ConnectionView() {
@@ -46,6 +50,12 @@ fun ConnectionView() {
                     },
                     navigateToHome = {
                         navController.navigate("home")
+
+                        FirebaseManager.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                            param(FirebaseAnalytics.Param.ITEM_ID, 0)
+                            param(FirebaseAnalytics.Param.ITEM_NAME, "test")
+                            param(FirebaseAnalytics.Param.CONTENT_TYPE, "test content")
+                        }
                     }
                 )
 
