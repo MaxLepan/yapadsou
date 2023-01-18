@@ -6,6 +6,7 @@ import android.widget.Toast
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
@@ -26,7 +27,7 @@ object FirebaseManager {
         callback: () -> Unit,
         context : Context
     ) : Boolean {
-    
+
         val user = User(email, password)
         val users = db.collection("users")
 
@@ -140,5 +141,17 @@ object FirebaseManager {
         usersRef.addOnSuccessListener(callback)
 
         return true
+    }
+
+    fun addTestOnItem(id: String) {
+        val itemRef = db.collection("items").document(id)
+
+        itemRef.update("nbTest", FieldValue.increment(1))
+    }
+
+    fun getItemFromId(id: String, callback: (DocumentSnapshot) -> Unit) {
+        val itemRef = db.collection("items").document(id).get()
+
+        itemRef.addOnSuccessListener(callback)
     }
 }
