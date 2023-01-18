@@ -24,7 +24,7 @@ object FirebaseManager {
         email: String,
         password: String,
         confirmPassword: String,
-        callback: () -> Unit,
+        callback: (DocumentSnapshot) -> Unit,
         context : Context
     ) : Boolean {
 
@@ -37,9 +37,8 @@ object FirebaseManager {
                 .add(user)
                 .addOnSuccessListener { result ->
 
-                    println(result)
+                    getUserById(result.id, callback)
 
-                    callback()
                 }
                 .addOnFailureListener { e ->
                     Toast.makeText(context, "Une erreur est survenue : " + e.message, Toast.LENGTH_LONG).show()
@@ -87,7 +86,7 @@ object FirebaseManager {
     fun connection(
         email: String,
         password: String,
-        callback: () -> Unit,
+        callback: (DocumentSnapshot) -> Unit,
         context: Context
     ): Boolean {
         val users = db.collection("users")
@@ -98,7 +97,7 @@ object FirebaseManager {
             .get()
             .addOnSuccessListener { matchingUsers ->
                 if (!matchingUsers.isEmpty) {
-                    callback()
+                    getUserById(matchingUsers.documents[0].id, callback)
                 } else {
                     Toast.makeText(context, "Email ou mot de passe incorrect !", Toast.LENGTH_LONG).show()
                 }

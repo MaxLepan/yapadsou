@@ -39,7 +39,7 @@ fun ConnectionView() {
             .fillMaxHeight()
             .background(Color(0xFFF7F7F7))
     ) {
-        NavHost(navController = navController, startDestination = "home") {
+        NavHost(navController = navController, startDestination = "onboarding") {
             composable("onboarding") {
                 OnboardingView {
                     navController.navigate("register")
