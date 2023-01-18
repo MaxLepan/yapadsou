@@ -5,6 +5,7 @@ import android.util.Log
 import android.widget.Toast
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
@@ -122,6 +123,22 @@ object FirebaseManager {
             val res = result.filter { it.contains(term) }
             callback(res)
         }
+        return true
+    }
+
+    fun getUserById(id: String, callback: (DocumentSnapshot) -> Unit): Boolean {
+        val userRef = db.collection("users").document(id).get()
+
+        userRef.addOnSuccessListener(callback)
+
+        return true
+    }
+
+    fun getAllUsers(callback: (QuerySnapshot) -> Unit): Boolean {
+        val usersRef = db.collection("users").get()
+
+        usersRef.addOnSuccessListener(callback)
+
         return true
     }
 }
