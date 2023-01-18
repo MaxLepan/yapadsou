@@ -9,5 +9,5 @@ data class ProductItem(
     var stars: Int = 0,
     var nbTest: Int = 0,
     val description: String = "",
-    val link: String = ""
+    val lien: String = ""
 )

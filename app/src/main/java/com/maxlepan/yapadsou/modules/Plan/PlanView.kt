@@ -1,5 +1,9 @@
 package com.maxlepan.yapadsou.modules.Plan
 
+import android.content.Intent
+import android.graphics.Bitmap
+import android.net.Uri
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -9,11 +13,15 @@ import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.*
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
@@ -24,8 +32,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.google.firebase.firestore.ktx.toObject
 import com.maxlepan.yapadsou.R
 import com.maxlepan.yapadsou.models.ProductItem
+import com.maxlepan.yapadsou.providers.FirebaseManager
 import com.maxlepan.yapadsou.ui.components.BlueButtonView
 import com.maxlepan.yapadsou.ui.theme.IntegralCF
 import com.maxlepan.yapadsou.ui.theme.Inter
@@ -33,7 +43,17 @@ import com.maxlepan.yapadsou.ui.theme.Typography
 
 @Composable
 fun PlanView(navController: NavHostController?, planId: String) {
-    var item = ProductItem("", "C'est joli", "réel", "Rezo")
+    val item = remember {
+        mutableStateOf<ProductItem>(ProductItem())
+    }
+    FirebaseManager.getItemFromId(planId) {result ->
+        result.toObject<ProductItem>()?.let {productItem ->
+            println("### $productItem")
+            item.value = productItem
+        }
+    }
+    val uriHandler = LocalUriHandler.current
+
     Column(
         verticalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
@@ -81,7 +101,7 @@ fun PlanView(navController: NavHostController?, planId: String) {
                         .padding(end = 50.dp)
                 ) {
                     Text(
-                        text = "Abonnement 1 an",
+                        text = item.value.title,
                         color = Color.White,
                         style = TextStyle(
                             fontFamily = IntegralCF,
@@ -90,7 +110,7 @@ fun PlanView(navController: NavHostController?, planId: String) {
                         )
                     )
                     Text(
-                        text = "2 mois offerts",
+                        text = item.value.subTitle,
                         color = Color.White,
                         style = Typography.body2
                     )
@@ -148,7 +168,7 @@ fun PlanView(navController: NavHostController?, planId: String) {
                         Row {
                             for (i in 1..5) {
                                 var icon = R.drawable.ic_launcher_background
-                                if (i > 2) { // on va remplacer 2 par item.stars
+                                if (i > item.value.stars) { // on va remplacer 2 par item.stars
                                     icon = R.drawable.ic_launcher_foreground
                                 }
                                 Image(
@@ -162,49 +182,16 @@ fun PlanView(navController: NavHostController?, planId: String) {
                         }
                     }
                     Text(
-                        text = buildAnnotatedString {
-                            withStyle(
-                                style = SpanStyle(
-                                    fontFamily = Inter,
-                                    fontSize = 14.sp,
-                                    fontWeight = FontWeight.Medium
-                                )
-                            ) {
-                                append("Chaque année, O’Tacos veut vous mettre bien. On sait que t’es étudiant et que c’est la galère, alors on t’a prévu des ")
-                            }
-                            withStyle(
-                                style = SpanStyle(
-                                    fontFamily = Inter,
-                                    fontSize = 14.sp,
-                                    fontWeight = FontWeight.Bold
-                                )
-                            ) { append("giga MAXI TACOS") }
-                            withStyle(
-                                style = SpanStyle(
-                                    fontFamily = Inter,
-                                    fontSize = 14.sp,
-                                    fontWeight = FontWeight.Medium
-                                )
-                            ) { append(" à des ") }
-                            withStyle(
-                                style = SpanStyle(
-                                    fontFamily = Inter,
-                                    fontSize = 14.sp,
-                                    fontWeight = FontWeight.Bold
-                                )
-                            ) { append("giga BAS PRIX") }
-                            withStyle(
-                                style = SpanStyle(
-                                    fontFamily = Inter,
-                                    fontSize = 14.sp,
-                                    fontWeight = FontWeight.Medium
-                                )
-                            ) { append(". Ca se passe maintenant !") }
-                        }
+                        text = item.value.description,
+                        style = TextStyle(
+                            fontFamily = Inter,
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Medium
+                        )
                     )
                 }
                 Text(
-                    text = "testÉe PAR 32 GALÉRIENS",
+                    text = "testÉe PAR ${item.value.nbTest} GALÉRIENS",
                     color = Color(0xff1b191a),
                     style = Typography.h3,
                     modifier = Modifier
@@ -220,7 +207,7 @@ fun PlanView(navController: NavHostController?, planId: String) {
                 )
         ) {
             BlueButtonView(text = "Profiter de l'offre") {
-
+                uriHandler.openUri(item.value.lien)
             }
         }
 
