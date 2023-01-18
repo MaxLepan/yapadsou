@@ -25,7 +25,7 @@ import kotlin.math.round
 
 @Composable
 fun Footer(selected: Int, navController: NavHostController?) {
-    var footerIcons: List<IconFooter> = listOf(
+    val footerIcons: List<IconFooter> = listOf(
         IconFooter(
             icon = R.drawable.home_icon,
             iconActive = R.drawable.home_icon_active,

@@ -32,7 +32,7 @@ fun InputView(
     keyboardType: KeyboardType,
     isPassword: Boolean
 ) {
-    var leadingIcon : @Composable (() -> Unit)? = {}
+    var leadingIcon : @Composable (() -> Unit)? = null
     if (icon > 0) leadingIcon = {
         Image(
             painter = painterResource(id = icon),
