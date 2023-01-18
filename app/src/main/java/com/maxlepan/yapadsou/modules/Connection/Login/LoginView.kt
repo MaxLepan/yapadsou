@@ -45,11 +45,11 @@ fun LoginView(navigateToRegister: () -> Unit, navigateToHome: () -> Unit) {
 
             InputView(placeholder = "Ton adresse e-mail", value = email, callback = { new ->
                 email = new
-            }, null, keyboardType = KeyboardType.Email, isPassword = false)
+            }, keyboardType = KeyboardType.Email, isPassword = false)
 
             InputView(placeholder = "Ton mot de passe", value = password, callback = { new ->
                 password = new
-            }, null, keyboardType = KeyboardType.Password, isPassword = true)
+            }, keyboardType = KeyboardType.Password, isPassword = true)
 
             Text(
                 text = "Mot de passe oublié ?",

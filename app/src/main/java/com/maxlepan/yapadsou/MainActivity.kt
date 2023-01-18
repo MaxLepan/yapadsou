@@ -108,6 +108,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun DefaultPreview() {
     YapadsouTheme {
-        Home()
+        Home(null)
     }
 }
