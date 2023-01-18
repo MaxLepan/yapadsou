@@ -23,6 +23,8 @@ import com.maxlepan.yapadsou.modules.Connection.Login.LoginView
 import com.maxlepan.yapadsou.modules.Connection.Register.RegisterView
 import com.maxlepan.yapadsou.modules.Home.Home
 import com.maxlepan.yapadsou.modules.Onboarding.OnboardingView
+import com.maxlepan.yapadsou.modules.Plan.PlanView
+import com.maxlepan.yapadsou.modules.User.UserEdit
 import com.maxlepan.yapadsou.providers.FirebaseManager
 
 @Composable
@@ -37,7 +39,7 @@ fun ConnectionView() {
             .fillMaxHeight()
             .background(Color(0xFFF7F7F7))
     ) {
-        NavHost(navController = navController, startDestination = "onboarding") {
+        NavHost(navController = navController, startDestination = "home") {
             composable("onboarding") {
                 OnboardingView {
                     navController.navigate("register")
@@ -81,7 +83,17 @@ fun ConnectionView() {
             composable("add-plan-photo") {
                 AddPlanPhotoView(navController)
             }
-
+            composable("user-edit") {
+                UserEdit(navController = navController) {
+                    navController.navigate("home")
+                }
+            }
+            composable("item/{itemId}"){navBackStackEntry ->
+                val itemId = navBackStackEntry.arguments?.getString("itemId")
+                itemId?.let {
+                    PlanView(navController = navController, planId = itemId)
+                }
+            }
 
         }
 

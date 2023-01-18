@@ -23,7 +23,6 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.tasks.OnCompleteListener
-
 import com.google.firebase.messaging.FirebaseMessaging
 import com.maxlepan.yapadsou.modules.Connection.ConnectionView
 import com.maxlepan.yapadsou.modules.Home.Home

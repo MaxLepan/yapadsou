@@ -111,6 +111,8 @@ fun OnboardingView(navigateToConnection: () -> Unit) {
                 modifier = Modifier
                     .clip(RoundedCornerShape(10))
                     .background(Color.White)
+                    .fillMaxWidth()
+                    .height(240.dp)
                     .padding(top = 20.dp, start = 20.dp, end = 20.dp, bottom = 10.dp)
             ) {
                 items(productItems.size) { index ->

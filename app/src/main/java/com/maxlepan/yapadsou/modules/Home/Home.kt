@@ -1,6 +1,5 @@
 package com.maxlepan.yapadsou.modules.Home
 
-import android.graphics.drawable.Icon
 import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
@@ -11,17 +10,12 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.semantics.Role.Companion.Image
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -33,7 +27,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.google.firebase.firestore.ktx.toObject
 import com.maxlepan.yapadsou.R
-import com.maxlepan.yapadsou.models.IconFooter
 import com.maxlepan.yapadsou.models.ProductItem
 import com.maxlepan.yapadsou.providers.FirebaseManager
 import com.maxlepan.yapadsou.ui.theme.Inter
@@ -47,13 +40,14 @@ import com.maxlepan.yapadsou.ui.components.ProductCard
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun Home(navController : NavHostController?) {
+fun Home(navController: NavHostController?) {
     var search by remember { mutableStateOf(TextFieldValue("")) }
-    var productItems = remember { mutableStateListOf<ProductItem>() }
+    val productItems = remember { mutableStateListOf<ProductItem>() }
     FirebaseManager.getItemsWithLimit(10){ result ->
         for (document in result) {
             Log.d("###", document.id)
             val productItem = document.toObject<ProductItem>()
+            productItem.itemId = document.id
             productItems.add(productItem)
         }
     }
@@ -192,13 +186,24 @@ fun Home(navController : NavHostController?) {
                                 .padding(start = 25.dp, top = 0.dp, end = 25.dp, bottom = 77.dp)
                         ) {
                             items(productItems.size) { index ->
-                                ProductCard(
-                                    title = productItems[index].title,
-                                    subTitle = productItems[index].subTitle,
-                                    imageProduct = productItems[index].image,
-                                    iconUser = "",
-                                    height = 157
-                                )
+                                Button(
+                                    onClick = {
+                                              navController?.navigate("item/${productItems[index].itemId}")
+                                    },
+                                    colors = ButtonDefaults.buttonColors(
+                                        backgroundColor = Color.Transparent
+                                    ),
+                                    elevation = null,
+                                    contentPadding = PaddingValues(0.dp)
+                                ) {
+                                    ProductCard(
+                                        title = productItems[index].title,
+                                        subTitle = productItems[index].subTitle,
+                                        imageProduct = productItems[index].image,
+                                        iconUser = "",
+                                        height = 157
+                                    )
+                                }
                             }
                         }
                     }
