@@ -35,7 +35,7 @@ import com.maxlepan.yapadsou.ui.theme.MediumBlue
 import com.maxlepan.yapadsou.ui.theme.Typography
 
 @Composable
-fun UserEdit(navController : NavHostController?, navigateToHome : () -> Unit) {
+fun UserEdit(navController : NavHostController?, userId : String, navigateToHome : () -> Unit) {
     var userName by remember { mutableStateOf(TextFieldValue("")) }
     var email by remember { mutableStateOf(TextFieldValue("")) }
 
@@ -215,7 +215,8 @@ fun UserEdit(navController : NavHostController?, navigateToHome : () -> Unit) {
             bottomBar = {
                 Footer(
                     selected = 2,
-                    navController = navController
+                    navController = navController,
+                    userId = userId
                 )
             }
         )
@@ -225,5 +226,5 @@ fun UserEdit(navController : NavHostController?, navigateToHome : () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun UserEditPreview() {
-    UserEdit(null) {}
+    UserEdit(null, "") {}
 }

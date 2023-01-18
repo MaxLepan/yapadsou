@@ -37,7 +37,7 @@ import com.maxlepan.yapadsou.ui.theme.MediumBlue
 import com.maxlepan.yapadsou.ui.theme.Typography
 
 @Composable
-fun AddPlanDescView(navController : NavHostController?, navigateToAddPlanPhoto: () -> Unit) {
+fun AddPlanDescView(navController : NavHostController?, userId: String, navigateToAddPlanPhoto: () -> Unit) {
     var title by remember { mutableStateOf(TextFieldValue("")) }
     var description by remember { mutableStateOf(TextFieldValue("")) }
     var link by remember { mutableStateOf(TextFieldValue("")) }
@@ -191,7 +191,8 @@ fun AddPlanDescView(navController : NavHostController?, navigateToAddPlanPhoto: 
             bottomBar = {
                 Footer(
                     selected = 1,
-                    navController = navController
+                    navController = navController,
+                    userId = userId
                 )
             }
         )
@@ -201,7 +202,7 @@ fun AddPlanDescView(navController : NavHostController?, navigateToAddPlanPhoto: 
 @Preview(showBackground = true)
 @Composable
 fun AddPlanDescPreview(){
-    AddPlanDescView(null){
+    AddPlanDescView(null, userId = ""){
 
     }
 }

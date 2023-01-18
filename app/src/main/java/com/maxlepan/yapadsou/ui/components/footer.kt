@@ -22,12 +22,13 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.maxlepan.yapadsou.R
 import com.maxlepan.yapadsou.models.IconFooter
+import com.maxlepan.yapadsou.models.User
 import com.maxlepan.yapadsou.providers.FirebaseManager
 import java.util.Objects
 import kotlin.math.round
 
 @Composable
-fun Footer(selected: Int, navController: NavHostController?) {
+fun Footer(selected: Int, navController: NavHostController?, userId : String) {
     val footerIcons: List<IconFooter> = listOf(
         IconFooter(
             icon = R.drawable.home_icon,
@@ -83,7 +84,7 @@ fun Footer(selected: Int, navController: NavHostController?) {
                                     param(FirebaseAnalytics.Param.ITEM_NAME, "Button Footer")
                                     param(FirebaseAnalytics.Param.CONTENT_TYPE, "User have navigate with footer")
                                 }
-                                navController?.navigate(iconFooter.navDirection)
+                                navController?.navigate(iconFooter.navDirection + "/" + userId)
                             }
                         },
                         colors = ButtonDefaults.buttonColors(
@@ -112,5 +113,5 @@ fun Footer(selected: Int, navController: NavHostController?) {
 @Preview(showBackground = true)
 @Composable
 fun FooterPreview() {
-    Footer(selected = 0, null)
+    Footer(selected = 0, null, "")
 }

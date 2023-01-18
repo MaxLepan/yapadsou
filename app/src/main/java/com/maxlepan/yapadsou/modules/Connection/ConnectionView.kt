@@ -50,10 +50,8 @@ fun ConnectionView() {
                     navigateToLogin = {
                         navController.navigate("login")
                     },
-                    navigateToHome = {
-                        navController.navigate("home")
-
-
+                    navigateToHome = {userId ->
+                        navController.navigate("home/${userId}")
                     }
                 )
 
@@ -64,31 +62,51 @@ fun ConnectionView() {
                     navigateToRegister = {
                         navController.navigate("register")
                     },
-                    navigateToHome = {
-                        navController.navigate("home")
+                    navigateToHome = {userId ->
+                        navController.navigate("home/${userId}")
                     }
                 )
             }
-            composable("home") {
-                Home(navController)
-            }
-            composable("add-plan-description") {
-                AddPlanDescView(
-                    navigateToAddPlanPhoto = {
-                        navController.navigate("add-plan-photo")
-                    },
-                    navController = navController
-                )
-            }
-            composable("add-plan-photo") {
-                AddPlanPhotoView(navController)
-            }
-            composable("user-edit") {
-                UserEdit(navController = navController) {
-                    navController.navigate("home")
+            composable("home/{userId}") { navBackStackEntry ->
+
+                val userId = navBackStackEntry.arguments?.getString("userId")
+                userId?.let {
+                    Home(navController, userId)
                 }
             }
-            composable("item/{itemId}"){navBackStackEntry ->
+            composable("add-plan-description/{userId}") { navBackStackEntry ->
+
+                val userId = navBackStackEntry.arguments?.getString("userId")
+                userId?.let {
+                    AddPlanDescView(
+                        navigateToAddPlanPhoto = {
+                            navController.navigate("add-plan-photo/${userId}")
+                        },
+                        navController = navController,
+                        userId = userId
+                    )
+                }
+            }
+            composable(
+                "add-plan-photo/{userId}"
+            ) { navBackStackEntry ->
+                val userId = navBackStackEntry.arguments?.getString("userId")
+                userId?.let {
+                    AddPlanPhotoView(navController, userId)
+                }
+            }
+            composable(
+                "user-edit/{userId}"
+            ) { navBackStackEntry ->
+
+                val userId = navBackStackEntry.arguments?.getString("userId")
+                userId?.let {
+                    UserEdit(navController = navController, userId = userId) {
+                        navController.navigate("home/${userId}")
+                    }
+                }
+            }
+            composable("item/{itemId}") { navBackStackEntry ->
                 val itemId = navBackStackEntry.arguments?.getString("itemId")
                 itemId?.let {
                     PlanView(navController = navController, planId = itemId)
