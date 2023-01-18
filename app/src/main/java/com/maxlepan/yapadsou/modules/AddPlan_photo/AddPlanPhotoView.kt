@@ -1,6 +1,7 @@
 package com.maxlepan.yapadsou.modules.AddPlan_desc
 
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
@@ -20,12 +21,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavHostController
+import com.maxlepan.yapadsou.R
 import com.maxlepan.yapadsou.ui.components.BlueButtonView
 import com.maxlepan.yapadsou.ui.components.Footer
 import com.maxlepan.yapadsou.ui.theme.MediumBlue
@@ -144,11 +147,19 @@ fun AddPlanPhotoView(navController : NavHostController?) {
                                         .padding(20.dp)
                                         .size(150.dp)
                                     ) {
-                                    Text(
-                                        text = "+",
-                                        color = Color.White,
-                                        fontSize = 50.sp
-                                    )
+                                    if (imageUri == null) {
+                                        Image(
+                                            painter = painterResource(id = R.drawable.plus_square),
+                                            contentDescription = "plus_square"
+                                        )
+                                    } else {
+                                        bitmap.value?.let { btm ->
+                                            Image(
+                                                bitmap = btm.asImageBitmap(),
+                                                contentDescription = null
+                                            )
+                                        }
+                                    }
                                 }
                                 imageUri?.let {
                                     if (Build.VERSION.SDK_INT < 28) {
@@ -159,14 +170,6 @@ fun AddPlanPhotoView(navController : NavHostController?) {
                                         val source = ImageDecoder
                                             .createSource(context.contentResolver, it)
                                         bitmap.value = ImageDecoder.decodeBitmap(source)
-                                    }
-
-                                    bitmap.value?.let { btm ->
-                                        Image(
-                                            bitmap = btm.asImageBitmap(),
-                                            contentDescription = null,
-                                            modifier = Modifier.size(400.dp)
-                                        )
                                     }
                                 }
                             }
