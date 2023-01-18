@@ -41,7 +41,7 @@ fun Footer(selected: Int, navController: NavHostController?) {
         IconFooter(
             icon = R.drawable.user_icon,
             iconActive = R.drawable.user_icon_active,
-            navDirection = "home",
+            navDirection = "user-edit",
             selected = false
         )
     )

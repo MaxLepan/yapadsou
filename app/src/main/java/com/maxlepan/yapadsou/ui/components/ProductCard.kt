@@ -32,7 +32,7 @@ fun ProductCard(title:String, subTitle:String, imageProduct : String, iconUser :
         modifier = Modifier
             .padding(bottom = 5.dp)
             .fillMaxWidth()
-            .height(height = (height + 5).dp)
+            .height(height = ((height*0.8 + height * 20/height) + 5).dp)
             ){
         Card(
             elevation = 0.dp,
