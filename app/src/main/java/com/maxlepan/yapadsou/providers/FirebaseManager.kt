@@ -36,6 +36,9 @@ object FirebaseManager {
             db.collection("users")
                 .add(user)
                 .addOnSuccessListener { result ->
+
+                    println(result)
+
                     callback()
                 }
                 .addOnFailureListener { e ->
