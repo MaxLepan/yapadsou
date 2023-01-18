@@ -25,9 +25,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import coil.compose.rememberAsyncImagePainter
 import com.google.firebase.firestore.ktx.toObject
 import com.maxlepan.yapadsou.R
 import com.maxlepan.yapadsou.models.ProductItem
+import com.maxlepan.yapadsou.models.User
 import com.maxlepan.yapadsou.providers.FirebaseManager
 import com.maxlepan.yapadsou.ui.theme.Inter
 import com.maxlepan.yapadsou.ui.theme.Typography
@@ -40,9 +42,14 @@ import com.maxlepan.yapadsou.ui.components.ProductCard
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun Home(navController: NavHostController?) {
+fun Home(navController: NavHostController?, userId: String) {
+
     var search by remember { mutableStateOf(TextFieldValue("")) }
+
     val productItems = remember { mutableStateListOf<ProductItem>() }
+
+    val user = remember { mutableStateOf<User>(User()) }
+
     FirebaseManager.getItemsWithLimit(10){ result ->
         for (document in result) {
             Log.d("###", document.id)
@@ -51,6 +58,15 @@ fun Home(navController: NavHostController?) {
             productItems.add(productItem)
         }
     }
+
+    FirebaseManager.getUserById(userId){result ->
+        result.toObject<User>()?.let {newUser ->
+            println("### $newUser")
+            user.value = newUser
+            user.value.userId = result.id
+        }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -90,8 +106,12 @@ fun Home(navController: NavHostController?) {
                                     style = Typography.subtitle1
                                 )
                             }
+                            var imageUser = painterResource(id = R.drawable.ic_launcher_background)
+                            if (user.value.image !== ""){
+                                imageUser = rememberAsyncImagePainter(user.value.image)
+                            }
                             Image(
-                                painter = painterResource(id = R.drawable.ic_launcher_background),
+                                painter = imageUser,
                                 contentDescription = "Ellipse 1",
                                 modifier = Modifier
                                     .size(size = 45.dp)
@@ -212,7 +232,8 @@ fun Home(navController: NavHostController?) {
             bottomBar = {
                 Footer(
                     selected = 0,
-                    navController = navController
+                    navController = navController,
+                    userId = user.value.userId
                 )
             }
         )
@@ -222,5 +243,5 @@ fun Home(navController: NavHostController?) {
 @Preview(showBackground = true)
 @Composable
 fun HomePreview() {
-    Home(null)
+    Home(null, "")
 }

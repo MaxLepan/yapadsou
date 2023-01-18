@@ -50,6 +50,7 @@ fun PlanView(navController: NavHostController?, planId: String) {
         result.toObject<ProductItem>()?.let {productItem ->
             println("### $productItem")
             item.value = productItem
+            item.value.itemId = result.id
         }
     }
     val uriHandler = LocalUriHandler.current

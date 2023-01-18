@@ -24,7 +24,7 @@ import com.maxlepan.yapadsou.ui.components.InputView
 import com.maxlepan.yapadsou.ui.theme.Typography
 
 @Composable
-fun LoginView(navigateToRegister: () -> Unit, navigateToHome: () -> Unit) {
+fun LoginView(navigateToRegister: () -> Unit, navigateToHome: (String) -> Unit) {
     var email by remember { mutableStateOf(TextFieldValue("")) }
     var password by remember { mutableStateOf(TextFieldValue("")) }
 
@@ -75,8 +75,8 @@ fun LoginView(navigateToRegister: () -> Unit, navigateToHome: () -> Unit) {
                         email = email.text,
                         password = password.text,
                         context = context,
-                        callback = {
-                            navigateToHome()
+                        callback = {user ->
+                            navigateToHome(user.id)
                         }
                     )
                 }

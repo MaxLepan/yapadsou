@@ -35,7 +35,7 @@ import com.maxlepan.yapadsou.ui.theme.MediumBlue
 import com.maxlepan.yapadsou.ui.theme.Typography
 
 @Composable
-fun AddPlanPhotoView(navController : NavHostController?) {
+fun AddPlanPhotoView(navController : NavHostController?, userId : String) {
     var imageUri by remember {
         mutableStateOf<Uri?>(null)
     }
@@ -183,7 +183,8 @@ fun AddPlanPhotoView(navController : NavHostController?) {
             bottomBar = {
                 Footer(
                     selected = 1,
-                    navController = navController
+                    navController = navController,
+                    userId= userId
                 )
             }
         )
@@ -193,5 +194,5 @@ fun AddPlanPhotoView(navController : NavHostController?) {
 @Preview(showBackground = true)
 @Composable
 fun AddPlanPhotoPreview() {
-    AddPlanPhotoView(null)
+    AddPlanPhotoView(null, "")
 }
