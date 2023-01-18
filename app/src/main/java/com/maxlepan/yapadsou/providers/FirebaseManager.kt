@@ -26,7 +26,7 @@ object FirebaseManager {
         callback: () -> Unit,
         context : Context
     ) : Boolean {
-
+    
         val user = User(email, password)
         val users = db.collection("users")
 
@@ -34,7 +34,7 @@ object FirebaseManager {
         fun addNewUser() {
             db.collection("users")
                 .add(user)
-                .addOnSuccessListener {
+                .addOnSuccessListener { result ->
                     callback()
                 }
                 .addOnFailureListener { e ->
